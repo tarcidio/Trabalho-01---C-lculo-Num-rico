@@ -5,6 +5,9 @@
 #define MAX 100
 #define precisao 0.0000000000000001
 
+
+/** DEFINICAO DE CADA UMA DAS FUNCOES E DERIVADAS */
+
 typedef double (*Funcao)(double);
 
 double funcao_01(double x){
@@ -43,7 +46,21 @@ double derivada_segunda_funcao_03(double x){
     return pow(EULER,x) - cos(x);
 }
 
+/**
+FUNCAO: metodo_bissecao
+-------------------------------
+FUNCIONALIDADE: REFINA O APROXIMACAO DA RAIZ VIA METODO DA BISSECAO UTILIZANDO UM INTERVALO INICIAL
 
+ENTRADAS:
+    1) FUNCAO NA QUAL SE BUSCA A RAIZ
+    2) VALOR DA LIMITACAO DO INTERVALO PELA ESQUERDA
+    3) VALOR DA LIMITACAO DO INTERVALO PELA DIREITA
+    4) TAMANHO DO VETOR QUE TERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+
+SAIDA
+    1) VETOR QUE CONTERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+    2) NULL CASO OCORRA ALGUM ERRO
+*/
 double *metodo_bissecao(Funcao f, double esquerda_intervalo, double direita_intervalo, int *tamanho){
     double aproximacao;
     double novo;
@@ -81,6 +98,21 @@ double *metodo_bissecao(Funcao f, double esquerda_intervalo, double direita_inte
     return NULL;
 }
 
+/**
+FUNCAO: metodo_Newton
+-------------------------------
+FUNCIONALIDADE: REFINA O APROXIMACAO DA RAIZ VIA METODO DE NEWTON UTILIZANDO APENAS UMA APROXIMACAO INICIAL
+
+ENTRADAS:
+    1) FUNCAO NA QUAL SE BUSCA A RAIZ
+    2) DERIVADA DA FUNCAO NA QUAL SE BUSCA AS RAIZ
+    3) APROXIMACAO INICIAL
+    4) TAMANHO DO VETOR QUE TERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+
+SAIDA
+    1) VETOR QUE CONTERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+    2) NULL CASO OCORRA ALGUM ERRO
+*/
 double *metodo_Newton(Funcao f, Funcao df, double aprox_inicial, int *tamanho){
         *tamanho = 1;
         double antigo, novo;
@@ -111,6 +143,22 @@ double *metodo_Newton(Funcao f, Funcao df, double aprox_inicial, int *tamanho){
         return NULL;
 }
 
+/**
+FUNCAO: metodo_Newton
+-------------------------------
+FUNCIONALIDADE: REFINA O APROXIMACAO DA RAIZ VIA METODO DE HALLEY UTILIZANDO APENAS UMA APROXIMACAO INICIAL
+
+ENTRADAS:
+    1) FUNCAO NA QUAL SE BUSCA A RAIZ
+    2) DERIVADA PRIMEIRA DA FUNCAO NA QUAL SE BUSCA AS RAIZ
+    3) DERIVADA SEGUNDA DA FUNCAO NA QUAL SE BUSCA A RAIZ
+    4) APROXIMACAO INICIAL
+    5) TAMANHO DO VETOR QUE TERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+
+SAIDA
+    1) VETOR QUE CONTERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+    2) NULL CASO OCORRA ALGUM ERRO
+*/
 double* metodo_Halley(Funcao f, Funcao df, Funcao ddf, double aprox_inicial, int *tamanho){
         *tamanho = 1;
         double antigo, novo;
@@ -141,6 +189,21 @@ double* metodo_Halley(Funcao f, Funcao df, Funcao ddf, double aprox_inicial, int
         return NULL;
 }
 
+/**
+FUNCAO: metodo_Newton
+-------------------------------
+FUNCIONALIDADE: REFINA O APROXIMACAO DA RAIZ VIA METODO DE SECANTE UTILIZANDO DUAS APROXIMACOES INICIAIS
+
+ENTRADAS:
+    1) FUNCAO NA QUAL SE BUSCA A RAIZ
+    2) PRIMEIRA APROXIMACAO INICIAL
+    3) SEGUNDA APROXIMACAO INICIAL
+    4) TAMANHO DO VETOR QUE TERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+
+SAIDA
+    1) VETOR QUE CONTERA TODAS AS APROXIMACOES DAS ITERACOES DO METODO
+    2) NULL CASO OCORRA ALGUM ERRO
+*/
 double* metodo_secante(Funcao f, double aprox_inicial_01, double aprox_inicial_02,int *tamanho){
     *tamanho = 1;
     double antigo_01, antigo_02, novo;
@@ -180,7 +243,7 @@ double* metodo_secante(Funcao f, double aprox_inicial_01, double aprox_inicial_0
 int main(void)
 {
     int i, tamanho;
-    double diferenca01, diferenca02, diferenca03, parcela01, parcela02, ordem;
+    //double diferenca01, diferenca02, diferenca03, parcela01, parcela02, ordem;
 
 /**============================= PRIMEIRA EQUACAO ============================================= */
 
@@ -193,7 +256,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_bissecao_funcao_01[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo da Bissecao aplicado a primeira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo da Bissecao aplicado a primeira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_bissecao_funcao_01[i + 1] - 0.7390851332151607 );
         diferenca02 = fabs( lista_bissecao_funcao_01[i] - 0.7390851332151607 );
@@ -202,7 +265,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DE NEWTON (1 EQ.) =========================== */
 
@@ -211,7 +274,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_Newton_funcao_01[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo de Newton aplicado a primeira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo de Newton aplicado a primeira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_Newton_funcao_01[i + 1] - 0.7390851332151607 );
         diferenca02 = fabs( lista_Newton_funcao_01[i] - 0.7390851332151607 );
@@ -220,7 +283,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DE HALLEY (1 EQ.) =========================== */
 
@@ -229,7 +292,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_Halley_funcao_01[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo de Halley aplicado a primeira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo de Halley aplicado a primeira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_Halley_funcao_01[i + 1] - 0.7390851332151607 );
         diferenca02 = fabs( lista_Halley_funcao_01[i] - 0.7390851332151607 );
@@ -238,7 +301,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DA SECANTE (1 EQ.) =========================== */
 
@@ -247,7 +310,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_secante_funcao_01[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo da Secante aplicado a primeira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo da Secante aplicado a primeira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_secante_funcao_01[i + 1] - 0.7390851332151607 );
         diferenca02 = fabs( lista_secante_funcao_01[i] - 0.7390851332151607 );
@@ -256,7 +319,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**============================= SEGUNDA EQUACAO ============================================= */
 
@@ -269,7 +332,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_bissecao_funcao_02[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Método da Bissecao aplicado a segunda equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Método da Bissecao aplicado a segunda equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_bissecao_funcao_02[i + 1] - 3 );
         diferenca02 = fabs( lista_bissecao_funcao_02[i] - 3 );
@@ -278,7 +341,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DE NEWTON (2 EQ.) =========================== */
 
@@ -287,7 +350,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_Newton_funcao_02[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo de Newton aplicado a segunda equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo de Newton aplicado a segunda equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_Newton_funcao_02[i + 1] - 3 );
         diferenca02 = fabs( lista_Newton_funcao_02[i] - 3 );
@@ -296,7 +359,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DE HALLEY (2 EQ.) =========================== */
 
@@ -305,7 +368,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_Halley_funcao_02[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo de Halley aplicado a segunda equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo de Halley aplicado a segunda equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_Halley_funcao_02[i + 1] - 3 );
         diferenca02 = fabs( lista_Halley_funcao_02[i] - 3 );
@@ -314,7 +377,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DA SECANTE (2 EQ.) =========================== */
 
@@ -323,7 +386,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_secante_funcao_02[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo da Secante aplicado a segunda equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo da Secante aplicado a segunda equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_secante_funcao_02[i + 1] - 3 );
         diferenca02 = fabs( lista_secante_funcao_02[i] - 3 );
@@ -332,7 +395,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**============================= TERCEIRA EQUACAO ============================================= */
 
@@ -345,7 +408,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_bissecao_funcao_03[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo da Bissecao aplicado a terceira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo da Bissecao aplicado a terceira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_bissecao_funcao_03[i + 1] - 0 );
         diferenca02 = fabs( lista_bissecao_funcao_03[i] - 0 );
@@ -354,7 +417,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DE NEWTON (3 EQ.) =========================== */
 
@@ -363,7 +426,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_Newton_funcao_03[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo de Newton aplicado a terceira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo de Newton aplicado a terceira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_Newton_funcao_03[i + 1] - 0 );
         diferenca02 = fabs( lista_Newton_funcao_03[i] - 0 );
@@ -372,7 +435,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DE HALLEY (3 EQ.) =========================== */
 
@@ -381,7 +444,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_Halley_funcao_03[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo de Halley aplicado a terceira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo de Halley aplicado a terceira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_Halley_funcao_03[i + 1] - 0 );
         diferenca02 = fabs( lista_Halley_funcao_03[i] - 0 );
@@ -390,7 +453,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== METODO DA SECANTE (3 EQ.) =========================== */
 
@@ -399,7 +462,7 @@ int main(void)
     for(i = 0; i <= tamanho; i++)
         printf("\n%.16lf", lista_secante_funcao_03[i]);
 
-    printf("\n\nEstudo da Ordem de Convergencia do Metodo da Secante aplicado a terceira equacao:");
+    /*printf("\n\nEstudo da Ordem de Convergencia do Metodo da Secante aplicado a terceira equacao:");
     for(i = 2; i <= tamanho; i++){
         diferenca01 = fabs( lista_secante_funcao_03[i + 1] - 0);
         diferenca02 = fabs( lista_secante_funcao_03[i] - 0 );
@@ -408,7 +471,7 @@ int main(void)
         parcela02 = fabs( log10(diferenca02/diferenca03) );
         ordem = parcela01/parcela02;
         printf("\n%.16lf", ordem);
-    }
+    }*/
 
 /**================== LIBERANDO AS LISTAS =========================== */
 
